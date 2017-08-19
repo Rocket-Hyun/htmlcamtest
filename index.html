@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script>
+  $(document).ready(function(){
+      if (!('url' in window) && ('webkitURL' in window)) {
+          window.URL = window.URL;
+      }
+
+      $('#camera').change(function(e){
+          $('#pic').attr('src', URL.createObjectURL(e.target.files[0]));
+      });
+  });
+  </script>
+</head>
+<body>
+  <input type="file" id="camera" name="camera" capture="camera" accept="image/*" />
+  <br />
+
+  <img id="pic" style="width:100%;" />
+</body>
+</html>
