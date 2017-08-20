@@ -6,22 +6,41 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Document</title>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <script>
-  $(document).ready(function(){
-      if (!('url' in window) && ('webkitURL' in window)) {
-          window.URL = window.URL;
-      }
-
-      $('#camera').change(function(e){
-          $('#pic').attr('src', URL.createObjectURL(e.target.files[0]));
-      });
-  });
-  </script>
 </head>
 <body>
-  <input type="file" id="camera" name="camera" capture="camera" accept="image/*" />
-  <br />
+  <div style="width:400px;">
+    <video id="video" width="400" height="300" autoplay></video>
+    <canvas id="canvas" width="400" height="300"></canvas>
+  </div>
 
-  <img id="pic" style="width:100%;" />
+<script>
+(function(){
+    var canvas = document.getElementById('canvas'),
+        context = canvas.getContext('2d'),
+        video = document.getElementById('video'),
+        vendorUrl = window.URL || window.webkitURL;
+
+    navigator.getMedia = navigator.getUserMedia ||
+                         navigator.webkitGetUserMedia ||
+                         navigator.mozGetUserMedia ||
+                         navigator.msGetUserMedia;
+
+    navigator.getMedia({
+      video: true,
+      audio: false
+    }, function(stream){
+      video.src = vendorUrl.createObjectURL(stream);
+      video.play();
+    }, function(error) {
+      // An error occured
+    });
+
+    // video.addEventListener('play',function(){
+    //
+    // });
+
+})();
+</script>
+
 </body>
 </html>
